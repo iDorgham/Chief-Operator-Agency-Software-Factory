@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factory.local/schemas/memory-entry.schema.json",
+  "title": "Curated Memory Entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "memory_id", "scope", "owner", "statement", "source_refs", "confidence", "sensitivity", "review_on"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "memory_id": {"type": "string", "minLength": 1},
+    "scope": {"type": "string", "pattern": "^(operator|organization|project:[a-z0-9-]+|client:[a-z0-9-]+|agent:[a-z0-9-]+)$"},
+    "owner": {"type": "string", "minLength": 1},
+    "statement": {"type": "string", "minLength": 1},
+    "source_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "confidence": {"enum": ["verified", "high", "medium", "low"]},
+    "sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+    "review_on": {"type": "string", "format": "date"},
+    "expires_on": {"type": ["string", "null"], "format": "date"}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "memory_id": "MEM-SYN-001",
+  "scope": "project:syn-todo-app",
+  "owner": "product-lead",
+  "statement": "The synthetic todo app targets desktop browsers only for v1.",
+  "source_refs": ["BRIEF-SYN-001 v1"],
+  "confidence": "verified",
+  "sensitivity": "internal",
+  "review_on": "2027-02-24",
+  "expires_on": null
+}

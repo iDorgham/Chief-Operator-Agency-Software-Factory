@@ -1,0 +1,27 @@
+version: 1.0.0
+status: import-ready
+front_door: chief-operator
+roles:
+  - id: chief-operator
+    source: agents/chief-operator/AGENT.md
+  - id: product-lead
+    source: agents/product-lead/AGENT.md
+  - id: delivery-manager
+    source: agents/delivery-manager/AGENT.md
+  - id: software-lead
+    source: agents/software-lead/AGENT.md
+  - id: quality-security-release-lead
+    source: agents/quality-security-release-lead/AGENT.md
+  - id: design-content-lead
+    source: agents/design-content-lead/AGENT.md
+  - id: marketing-growth-lead
+    source: agents/marketing-growth-lead/AGENT.md
+  - id: operations-analytics-improvement-lead
+    source: agents/operations-analytics-improvement-lead/AGENT.md
+channels:
+  - id: software-delivery
+    members: [chief-operator, product-lead, delivery-manager, software-lead, quality-security-release-lead]
+  - id: creative-growth
+    members: [chief-operator, design-content-lead, marketing-growth-lead, operations-analytics-improvement-lead]
+routines: []
+

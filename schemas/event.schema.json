@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factory.local/schemas/event.schema.json",
+  "title": "Factory Audit Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "event_id", "project_id", "event_type", "actor", "occurred_at", "summary"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "event_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": ["string", "null"]},
+    "run_id": {"type": ["string", "null"]},
+    "event_type": {"type": "string", "minLength": 1},
+    "actor": {"type": "string", "minLength": 1},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "summary": {"type": "string", "minLength": 1},
+    "previous_status": {"type": ["string", "null"]},
+    "new_status": {"type": ["string", "null"]},
+    "idempotency_key": {"type": ["string", "null"]},
+    "receipt_ref": {"type": ["string", "null"]},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}}
+  }
+}

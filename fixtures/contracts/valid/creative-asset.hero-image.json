@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "asset_id": "AST-SYN-001",
+  "project_id": "syn-launch-demo",
+  "brief_version": "creative-brief v2",
+  "media_type": "image",
+  "owner": "design-content-lead",
+  "channel": "landing page",
+  "format": "1600x900 PNG",
+  "status": "draft",
+  "sources": ["BRIEF-SYN-001"],
+  "claims": [],
+  "rights": "Generated for a fictional brand; no third-party material.",
+  "generation_tool": "unverified-image-tool",
+  "generation_model": null,
+  "approval_ref": null
+}

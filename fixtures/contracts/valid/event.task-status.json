@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "event_id": "EVT-SYN-001",
+  "project_id": "syn-todo-app",
+  "task_id": "SW-SYN-001",
+  "run_id": null,
+  "event_type": "task.status_changed",
+  "actor": "delivery-manager",
+  "occurred_at": "2026-11-24T10:05:00Z",
+  "summary": "Task moved to active after handoff acceptance.",
+  "previous_status": "queued",
+  "new_status": "active",
+  "idempotency_key": "SW-SYN-001:queued->active",
+  "receipt_ref": null,
+  "evidence_refs": ["HND-SYN-001"]
+}

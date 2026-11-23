@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "syn-todo-app",
+  "client_id": null,
+  "name": "Synthetic Todo App",
+  "outcome": "Exercise the software delivery workflow with fictional data.",
+  "status": "active",
+  "owner": "chief-operator",
+  "sensitivity": "internal",
+  "source_refs": ["fixtures/acceptance/software-request.md"],
+  "created_at": "2026-11-24T09:00:00Z",
+  "updated_at": "2026-11-24T09:00:00Z"
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "review_id": "REV-SYN-900",
+  "task_id": "SW-SYN-001",
+  "project_id": "syn-todo-app",
+  "reviewer": "software-lead",
+  "independent_from_owner": false,
+  "criteria": [{"criterion": "Works", "status": "pass"}],
+  "findings": [],
+  "decision": "approve",
+  "reviewed_at": "2026-11-24T13:00:00Z"
+}

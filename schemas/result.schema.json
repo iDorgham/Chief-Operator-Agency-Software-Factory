@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factory.local/schemas/result.schema.json",
+  "title": "Task Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "result_id", "task_id", "project_id", "owner", "summary", "status", "artifacts", "checks", "limitations", "completed_at"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "result_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "owner": {"type": "string", "minLength": 1},
+    "model_route": {"type": ["string", "null"]},
+    "summary": {"type": "string", "minLength": 1},
+    "status": {"enum": ["completed", "partial", "blocked", "failed"]},
+    "artifacts": {"type": "array", "items": {"type": "string"}},
+    "changed_files": {"type": "array", "items": {"type": "string"}},
+    "checks": {"type": "array", "items": {"type": "object", "required": ["name", "status"], "properties": {"name": {"type": "string"}, "status": {"enum": ["passed", "failed", "blocked", "not-run"]}, "details": {"type": "string"}}, "additionalProperties": false}},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "completed_at": {"type": "string", "format": "date-time"}
+  }
+}

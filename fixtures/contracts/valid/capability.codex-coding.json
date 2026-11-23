@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "capability_id": "CAP-SYN-001",
+  "tool": "Codex",
+  "provider": null,
+  "model": null,
+  "capability": "Repository code implementation",
+  "status": "unverified",
+  "constraints": ["Synthetic example; verify from a live selector before routing"],
+  "commercial_use": "unknown",
+  "data_policy_ref": null,
+  "verified_at": "2026-11-24T10:00:00Z"
+}

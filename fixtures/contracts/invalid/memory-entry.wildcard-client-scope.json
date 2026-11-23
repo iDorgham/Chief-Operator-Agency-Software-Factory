@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "memory_id": "MEM-SYN-900",
+  "scope": "client:*",
+  "owner": "chief-operator",
+  "statement": "A wildcard client scope must be rejected.",
+  "source_refs": ["none"],
+  "confidence": "low",
+  "sensitivity": "restricted",
+  "review_on": "2027-01-01"
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "proposal_id": "IMP-SYN-001",
+  "owner": "operations-analytics-improvement-lead",
+  "evidence_refs": ["REV-SYN-001", "REV-SYN-003"],
+  "problem": "Two synthetic reviews returned for missing accessibility evidence.",
+  "change": "Add an accessibility evidence line to templates/result.md.",
+  "expected_benefit": "Fewer review round-trips on UI tasks.",
+  "risk": "Slightly longer result records.",
+  "validation": "Compare review rounds on the next three synthetic UI tasks.",
+  "rollback": "Revert the template change.",
+  "status": "proposed"
+}

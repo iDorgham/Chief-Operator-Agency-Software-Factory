@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factory.local/schemas/capability.schema.json",
+  "title": "Verified Capability",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "capability_id", "tool", "capability", "status", "verified_at"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "capability_id": {"type": "string", "minLength": 1},
+    "tool": {"type": "string", "minLength": 1},
+    "provider": {"type": ["string", "null"]},
+    "model": {"type": ["string", "null"]},
+    "capability": {"type": "string", "minLength": 1},
+    "status": {"enum": ["installed", "validated", "import-ready", "planned", "blocked", "unverified"]},
+    "constraints": {"type": "array", "items": {"type": "string"}},
+    "commercial_use": {"enum": ["allowed", "not-allowed", "conditional", "unknown"]},
+    "data_policy_ref": {"type": ["string", "null"]},
+    "verified_at": {"type": "string", "format": "date-time"}
+  }
+}

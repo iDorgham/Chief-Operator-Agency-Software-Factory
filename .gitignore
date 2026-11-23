@@ -1,0 +1,12 @@
+# Generated validation/build output
+.cache/
+dist/
+build/
+coverage/
+node_modules/
+
+# Local secrets and environment
+.env
+.env.*
+!.env.example
+

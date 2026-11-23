@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factory.local/schemas/project.schema.json",
+  "title": "Factory Project",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "name", "status", "owner", "created_at", "updated_at"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "project_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,63}$"},
+    "client_id": {"type": ["string", "null"]},
+    "name": {"type": "string", "minLength": 1},
+    "outcome": {"type": "string"},
+    "status": {"enum": ["proposed", "active", "paused", "completed", "cancelled"]},
+    "owner": {"type": "string", "minLength": 1},
+    "sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+    "source_refs": {"type": "array", "items": {"type": "string"}},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"}
+  }
+}

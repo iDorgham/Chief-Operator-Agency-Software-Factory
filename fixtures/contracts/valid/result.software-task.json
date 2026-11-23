@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0.0",
+  "result_id": "RES-SYN-001",
+  "task_id": "SW-SYN-001",
+  "project_id": "syn-todo-app",
+  "owner": "software-lead",
+  "model_route": null,
+  "summary": "Added due-date field with migration and tests.",
+  "status": "partial",
+  "artifacts": ["branch feature/due-date"],
+  "changed_files": ["src/todos/model.ts", "src/todos/form.tsx"],
+  "checks": [
+    {"name": "unit tests", "status": "passed", "details": "Synthetic example"},
+    {"name": "accessibility review", "status": "not-run"}
+  ],
+  "limitations": ["Accessibility review not yet run"],
+  "evidence_refs": [],
+  "completed_at": "2026-11-24T12:00:00Z"
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0.0",
+  "task_id": "SW-SYN-900",
+  "project_id": "syn-todo-app",
+  "title": "Untestable task",
+  "status": "approved",
+  "owner": "software-lead",
+  "acceptance_criteria": [],
+  "version": "1"
+}

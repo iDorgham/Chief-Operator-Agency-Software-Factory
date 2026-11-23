@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factory.local/schemas/creative-asset.schema.json",
+  "title": "Creative Asset Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "asset_id", "project_id", "brief_version", "media_type", "owner", "status", "rights", "sources"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "asset_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "brief_version": {"type": "string", "minLength": 1},
+    "media_type": {"enum": ["text", "image", "video", "audio", "design"]},
+    "owner": {"type": "string", "minLength": 1},
+    "channel": {"type": ["string", "null"]},
+    "format": {"type": ["string", "null"]},
+    "status": {"enum": ["brief", "draft", "review", "approved", "scheduled", "published", "rejected"]},
+    "sources": {"type": "array", "items": {"type": "string"}},
+    "claims": {"type": "array", "items": {"type": "string"}},
+    "rights": {"type": "string", "minLength": 1},
+    "generation_tool": {"type": ["string", "null"]},
+    "generation_model": {"type": ["string", "null"]},
+    "approval_ref": {"type": ["string", "null"]}
+  }
+}

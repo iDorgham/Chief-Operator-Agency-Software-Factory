@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factory.local/schemas/approval.schema.json",
+  "title": "Exact Action Approval",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "approval_id", "project_id", "action", "target", "artifact_version", "impact", "status", "requested_at"],
+  "properties": {
+    "schema_version": {"enum": ["1.0.0", "1.1.0"]},
+    "approval_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "task_id": {"type": ["string", "null"]},
+    "action": {"enum": ["send", "publish", "schedule", "spend", "deploy", "merge", "delete", "purchase", "credential-change", "permission-change", "policy-change"]},
+    "target": {"type": "string", "minLength": 1},
+    "artifact_version": {"type": "string", "minLength": 1},
+    "impact": {"type": "string", "minLength": 1},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}},
+    "status": {"enum": ["requested", "approved", "rejected", "expired", "cancelled", "executed"]},
+    "requested_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": ["string", "null"], "format": "date-time"},
+    "decided_by": {"type": ["string", "null"]},
+    "decided_at": {"type": ["string", "null"], "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "if": {"required": ["status"], "properties": {"status": {"enum": ["approved", "rejected", "executed"]}}},
+      "then": {
+        "required": ["decided_by", "decided_at"],
+        "properties": {
+          "decided_by": {"type": "string", "minLength": 1},
+          "decided_at": {"type": "string", "format": "date-time"}
+        }
+      }
+    }
+  ]
+}

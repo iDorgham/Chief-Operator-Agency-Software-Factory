@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://factory.local/schemas/work-item.schema.json",
+  "title": "Factory Work Item",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "task_id", "project_id", "title", "status", "owner", "acceptance_criteria", "version"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "task_id": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "client_id": {"type": ["string", "null"]},
+    "title": {"type": "string", "minLength": 1},
+    "objective": {"type": "string"},
+    "status": {"enum": ["draft", "approved", "queued", "active", "blocked", "review", "completed", "cancelled"]},
+    "owner": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "minLength": 1},
+    "approved_input_refs": {"type": "array", "items": {"type": "string"}},
+    "acceptance_criteria": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "allowed_scope": {"type": "array", "items": {"type": "string"}},
+    "exclusions": {"type": "array", "items": {"type": "string"}},
+    "dependencies": {"type": "array", "items": {"type": "string"}},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}}
+  }
+}

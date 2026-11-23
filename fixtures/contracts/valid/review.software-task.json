@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "review_id": "REV-SYN-001",
+  "task_id": "SW-SYN-001",
+  "project_id": "syn-todo-app",
+  "reviewer": "quality-security-release-lead",
+  "independent_from_owner": true,
+  "criteria": [
+    {"criterion": "Due date persists and renders", "status": "pass", "evidence_refs": ["RES-SYN-001"]},
+    {"criterion": "Existing tests pass", "status": "not-evidenced"}
+  ],
+  "findings": [
+    {"severity": "medium", "summary": "Full test run output not attached.", "evidence_ref": null}
+  ],
+  "decision": "request-changes",
+  "reviewed_at": "2026-11-24T13:00:00Z"
+}
