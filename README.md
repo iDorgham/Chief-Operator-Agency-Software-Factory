@@ -30,13 +30,15 @@ A local-first, human-supervised operating system for software delivery, design, 
 
 ## Validate
 
-Requires PowerShell 7, Python 3 with `jsonschema` and `pyyaml`, and Git.
+Requires PowerShell 7, Git, and Python 3 with the packages in `scripts/requirements.txt` (`python -m pip install -r scripts/requirements.txt`).
 
 ```powershell
 pwsh -File scripts/validate-factory.ps1 -SkillValidator "$HOME/.codex/skills/.system/skill-creator/scripts/quick_validate.py"
 ```
 
 This checks Markdown links, skill packages, JSON Schema validity, valid/invalid contract fixtures, the OpenBot manifest, agent skill references and archive hashes.
+
+GitHub Actions runs the same script on every push and pull request ([`.github/workflows/validate.yml`](.github/workflows/validate.yml)). CI omits `-SkillValidator` because the Codex skill validator is only installed locally, so skill packages are still validated by hand.
 
 ## Current state
 
