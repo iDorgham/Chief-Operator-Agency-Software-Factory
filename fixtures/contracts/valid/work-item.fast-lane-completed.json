@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.1.0",
+  "task_id": "SW-SYN-002",
+  "project_id": "syn-todo-app",
+  "client_id": null,
+  "title": "Fix typo in contributor guide",
+  "objective": "Guide reads correctly.",
+  "status": "completed",
+  "lane": "fast",
+  "owner": "software-lead",
+  "reviewer": "automated-checks",
+  "version": "1",
+  "approved_input_refs": [],
+  "acceptance_criteria": ["Typo fixed", "Factory validation passes"],
+  "allowed_scope": ["docs/CONTRIBUTING.md"],
+  "exclusions": ["Any external action"],
+  "dependencies": [],
+  "evidence_refs": ["CI run validate-factory green"],
+  "created_at": "2026-11-24T09:00:00Z",
+  "updated_at": "2026-11-24T09:20:00Z"
+}

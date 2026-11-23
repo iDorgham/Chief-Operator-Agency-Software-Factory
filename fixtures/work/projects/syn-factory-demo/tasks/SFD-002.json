@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.1.0",
+  "task_id": "SFD-002",
+  "project_id": "syn-factory-demo",
+  "client_id": null,
+  "title": "Fix synthetic doc typo",
+  "objective": "Fix synthetic doc typo",
+  "status": "completed",
+  "lane": "fast",
+  "owner": "software-lead",
+  "reviewer": "automated-checks",
+  "version": "1",
+  "approved_input_refs": [
+    "BRIEF-SYN-DEMO v1"
+  ],
+  "acceptance_criteria": [
+    "Synthetic criterion is observable"
+  ],
+  "allowed_scope": [
+    "synthetic/**"
+  ],
+  "exclusions": [
+    "Any external action"
+  ],
+  "dependencies": [],
+  "evidence_refs": [
+    "CI-SYN-DEMO-002"
+  ],
+  "created_at": "2026-11-21T09:00:00Z",
+  "updated_at": "2026-11-21T09:30:00Z"
+}

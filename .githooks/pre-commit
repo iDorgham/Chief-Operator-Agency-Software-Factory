@@ -1,0 +1,10 @@
+#!/bin/sh
+# Fast local gate before each commit. Enable once per clone with:
+#   git config core.hooksPath .githooks
+# Skips the archive/link checks that CI runs; CI still runs the full validator.
+set -e
+root=$(git rev-parse --show-toplevel)
+python "$root/scripts/test_factory.py" >/dev/null 2>&1 || { echo "pre-commit: scripts/test_factory.py failed"; python "$root/scripts/test_factory.py"; exit 1; }
+python "$root/scripts/factory.py" --root "$root/fixtures/work" check >/dev/null
+python "$root/scripts/factory.py" --root "$root/work" check
+python "$root/scripts/validate_contracts.py" >/dev/null || { python "$root/scripts/validate_contracts.py"; exit 1; }

@@ -40,6 +40,14 @@ if ($SkillValidator) {
 & python (Join-Path $root "scripts\validate_contracts.py") | Out-Host
 if ($LASTEXITCODE -ne 0) { $failures.Add("Contract validation failed (scripts/validate_contracts.py)") }
 
+# Work automation: CLI tests, then every work record (synthetic and real).
+& python (Join-Path $root "scripts\test_factory.py") | Out-Host
+if ($LASTEXITCODE -ne 0) { $failures.Add("Factory CLI tests failed (scripts/test_factory.py)") }
+foreach ($workRoot in @("fixtures\work", "work")) {
+  & python (Join-Path $root "scripts\factory.py") --root (Join-Path $root $workRoot) check | Out-Host
+  if ($LASTEXITCODE -ne 0) { $failures.Add("Work records invalid under $workRoot (scripts/factory.py check)") }
+}
+
 if ($failures.Count) {
   # Write-Error under ErrorActionPreference=Stop would abort after the first
   # failure; report all of them instead.

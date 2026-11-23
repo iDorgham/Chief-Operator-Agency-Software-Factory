@@ -12,6 +12,7 @@ Statuses: `done`, `ready`, `blocked`, `deferred`.
 | TST-001 | done | Quality Lead | Create synthetic acceptance suite | `fixtures/acceptance/` and validation report |
 | OB-001 | ready | Chief Operator | Verify OpenBot version/license/account | Requires live app and operator account |
 | OB-002 | ready | Chief Operator | Import and test Chief Operator agent | Depends on OB-001 |
+| AUT-001 | done | Operations Lead | Automate task tracking, fast lane and retro proposals | `scripts/factory.py`, ADR-002, CI checks |
 | T3-001 | done | Software Lead | Verify local T3 Code CLI | `t3 v0.1.9`; help and control-plane commands inspected |
 | T3-002 | ready | Software Lead | Add this repository as a T3 Code project and verify one harmless Codex thread | Requires starting local T3 Code UI |
 | CORE-001 | deferred | Product/Software | Select and build Factory Core stack | Phase 3 approval and ADR |

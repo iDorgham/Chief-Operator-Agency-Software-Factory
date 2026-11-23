@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.1.0",
+  "task_id": "SFD-004",
+  "project_id": "syn-factory-demo",
+  "client_id": null,
+  "title": "Add synthetic receipt page",
+  "objective": "Add synthetic receipt page",
+  "status": "queued",
+  "lane": "standard",
+  "owner": "design-lead",
+  "reviewer": "quality-lead",
+  "version": "1",
+  "approved_input_refs": [
+    "BRIEF-SYN-DEMO v1"
+  ],
+  "acceptance_criteria": [
+    "Synthetic criterion is observable"
+  ],
+  "allowed_scope": [
+    "synthetic/**"
+  ],
+  "exclusions": [
+    "Any external action"
+  ],
+  "dependencies": [
+    "SFD-003"
+  ],
+  "evidence_refs": [],
+  "created_at": "2026-11-22T08:00:00Z",
+  "updated_at": "2026-11-22T08:10:00Z"
+}

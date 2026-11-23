@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "syn-factory-demo",
+  "client_id": null,
+  "name": "Synthetic factory demo",
+  "outcome": "Exercise factory.py check, next and retro.",
+  "status": "active",
+  "owner": "chief-operator",
+  "sensitivity": "internal",
+  "source_refs": [],
+  "created_at": "2026-11-20T08:00:00Z",
+  "updated_at": "2026-11-23T17:00:00Z"
+}

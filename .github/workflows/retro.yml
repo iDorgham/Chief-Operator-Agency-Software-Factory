@@ -1,0 +1,51 @@
+name: Weekly retro
+
+# Read-only self-improvement report. It drafts proposals in the run artifact
+# and never commits, opens issues or changes policy; adoption needs operator
+# approval (docs/04-workflows/improvement-loop.md).
+on:
+  schedule:
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  retro:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r scripts/requirements.txt
+
+      - name: Board status
+        run: |
+          python scripts/factory.py --root work status | tee -a "$GITHUB_STEP_SUMMARY"
+          python scripts/factory.py --root work next | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Retro and draft proposals
+        run: |
+          mkdir -p retro-out
+          cp -r work retro-out/work
+          python scripts/factory.py --root retro-out/work retro --write --report retro-out/retro.md
+          cat retro-out/retro.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: factory-retro
+          path: |
+            retro-out/retro.md
+            retro-out/work/improvements/
+          if-no-files-found: warn
