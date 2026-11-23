@@ -35,8 +35,8 @@ jobs:
       - name: Install validator dependencies
         run: python -m pip install -r scripts/requirements.txt
 
-      # Skill-package validation (-SkillValidator) is skipped here: the Codex
-      # quick_validate.py script is installed locally and is not vendored.
+      # Skill frontmatter is checked by scripts/validate_contracts.py. The
+      # optional -SkillValidator (Codex quick_validate.py) is local-only.
       - name: Run factory validation
         shell: pwsh
         run: ./scripts/validate-factory.ps1

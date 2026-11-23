@@ -36,9 +36,9 @@ Requires PowerShell 7, Git, and Python 3 with the packages in `scripts/requireme
 pwsh -File scripts/validate-factory.ps1 -SkillValidator "$HOME/.codex/skills/.system/skill-creator/scripts/quick_validate.py"
 ```
 
-This checks Markdown links, skill packages, JSON Schema validity, valid/invalid contract fixtures, the OpenBot manifest, agent skill references and archive hashes.
+This checks Markdown links, skill frontmatter, JSON Schema validity, valid/invalid contract and skill fixtures, the OpenBot manifest, agent skill references and archive hashes. `-SkillValidator` is optional and additionally runs the locally installed Codex validator.
 
-GitHub Actions runs the same script on every push and pull request ([`.github/workflows/validate.yml`](.github/workflows/validate.yml)). CI omits `-SkillValidator` because the Codex skill validator is only installed locally, so skill packages are still validated by hand.
+GitHub Actions runs the same script on every push and pull request ([`.github/workflows/validate.yml`](.github/workflows/validate.yml)), without `-SkillValidator`; the built-in skill frontmatter check covers skills in CI.
 
 ## Current state
 

@@ -8,6 +8,10 @@ Checks:
   4. openbot/team-manifest.yaml role sources exist and channel members are declared roles.
   5. Skills named in agents/*/AGENT.md "## Skills" sections exist as packages.
   6. Archive SHA256SUMS entries match file content at the baseline commit.
+  7. Every skills/*/SKILL.md and .agents/skills/*/SKILL.md has valid frontmatter
+     (allowed keys, hyphen-case name matching its directory, bounded description,
+     no TODO placeholders), names are unique, and every
+     fixtures/skills/invalid/<case>/SKILL.md is rejected.
 
 Exit code 0 on success, 1 on any failure. Requires: jsonschema, PyYAML, git.
 """
@@ -106,6 +110,85 @@ def check_agent_skill_refs() -> None:
                 fail(f"{rel(agent)} references unknown skill '{ref}'")
 
 
+SKILL_KEYS = {"name", "description", "license", "allowed-tools", "metadata"}
+SKILL_NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+FENCE = re.compile(r"^[ \t]*(?:(?:[-+*]|\d+[.)])[ \t]+)?(`{3,}|~{3,})")
+
+
+def skill_errors(skill_md: Path, yaml) -> list[str]:
+    """Return problems with one SKILL.md; an empty list means it is valid."""
+    text = skill_md.read_text(encoding="utf-8")
+    match = re.match(r"^---\n(.*?)\n---[ \t]*(?:\n|\Z)", text, re.S)
+    if not match:
+        return ["missing or malformed YAML frontmatter"]
+    try:
+        meta = yaml.safe_load(match.group(1))
+    except yaml.YAMLError as exc:
+        return [f"invalid frontmatter YAML: {exc}"]
+    if not isinstance(meta, dict):
+        return ["frontmatter must be a YAML mapping"]
+
+    errors = []
+    extra = set(meta) - SKILL_KEYS
+    if extra:
+        errors.append(f"unexpected frontmatter keys: {', '.join(sorted(map(str, extra)))}")
+
+    name = meta.get("name")
+    if not isinstance(name, str) or not name.strip():
+        errors.append("'name' must be a non-empty string")
+    elif not SKILL_NAME.match(name.strip()) or len(name.strip()) > 64:
+        errors.append(f"name '{name}' must be hyphen-case, at most 64 characters")
+    elif name.strip() != skill_md.parent.name:
+        errors.append(f"name '{name}' does not match directory '{skill_md.parent.name}'")
+
+    description = meta.get("description")
+    if not isinstance(description, str) or not description.strip():
+        errors.append("'description' must be a non-empty string")
+    else:
+        description = description.strip()
+        if len(description) > 1024:
+            errors.append(f"description is {len(description)} characters; maximum is 1024")
+        if "<" in description or ">" in description:
+            errors.append("description cannot contain angle brackets")
+        if description.startswith("[TODO:"):
+            errors.append("description is an unfinished TODO placeholder")
+
+    fence = None
+    for line in text[match.end():].splitlines():
+        opened = FENCE.match(line)
+        if opened:
+            marker = opened.group(1)
+            if fence is None:
+                fence = marker
+            elif marker[0] == fence[0] and len(marker) >= len(fence) and not line.strip()[len(marker):].strip():
+                fence = None
+            continue
+        if fence is None and re.fullmatch(r" {0,3}\[TODO:.*\][ \t]*", line):
+            errors.append("body contains an unfinished [TODO: ...] placeholder")
+            break
+    return errors
+
+
+def check_skills(yaml) -> None:
+    packages = sorted((ROOT / "skills").glob("*/SKILL.md")) + sorted((ROOT / ".agents" / "skills").glob("*/SKILL.md"))
+    for directory in sorted((ROOT / "skills").iterdir()):
+        if directory.is_dir() and not (directory / "SKILL.md").is_file():
+            fail(f"Skill directory without SKILL.md: {rel(directory)}")
+    seen: dict[str, Path] = {}
+    for skill_md in packages:
+        for error in skill_errors(skill_md, yaml):
+            fail(f"Invalid skill {rel(skill_md)}: {error}")
+        name = skill_md.parent.name
+        if name in seen:
+            fail(f"Duplicate skill name '{name}': {rel(seen[name])} and {rel(skill_md)}")
+        seen[name] = skill_md
+    print(f"Skills: {len(packages)} SKILL.md frontmatter checked.")
+
+    for skill_md in sorted((ROOT / "fixtures" / "skills" / "invalid").glob("*/SKILL.md")):
+        if not skill_errors(skill_md, yaml):
+            fail(f"Invalid skill fixture accepted: {rel(skill_md)}")
+
+
 def check_archive_hashes() -> None:
     lines = [line for line in ARCHIVE_SUMS.read_text(encoding="utf-8").splitlines() if line.strip()]
     if not lines:
@@ -141,6 +224,7 @@ def main() -> int:
     check_schemas_and_fixtures(jsonschema)
     check_manifest(yaml)
     check_agent_skill_refs()
+    check_skills(yaml)
     check_archive_hashes()
 
     if failures:
