@@ -9,7 +9,7 @@ Use one Chief Operator as your front door. Behind it, professional team leads, b
 [![Project Status](https://img.shields.io/badge/status-foundation_ready-2563eb?style=for-the-badge)](TASKS.md)
 [![Validation](https://img.shields.io/badge/validation-passing-16a34a?style=for-the-badge)](fixtures/acceptance/VALIDATION.md)
 [![Agents](https://img.shields.io/badge/persistent_agents-8-7c3aed?style=for-the-badge)](agents/README.md)
-[![Skills](https://img.shields.io/badge/validated_skills-19-e11d48?style=for-the-badge)](skills/README.md)
+[![Skills](https://img.shields.io/badge/validated_skills-20-e11d48?style=for-the-badge)](skills/README.md)
 [![Contracts](https://img.shields.io/badge/contracts-11-0891b2?style=for-the-badge)](schemas)
 [![Human Supervised](https://img.shields.io/badge/control-human_supervised-f59e0b?style=for-the-badge)](docs/01-governance/team-constitution.md)
 
@@ -143,7 +143,9 @@ Read the complete [OpenBot and T3 Code operating guide](docs/09-integrations/ope
 | Security, performance, QA, release | Quality Lead | Independent review and evidence gates |
 | Brand, UI/UX, design systems | Design & Content Lead | Design and accessibility workflows |
 | Text, image, and video | Design & Content Lead | Production skills and provenance records |
-| Marketing, social, advertising | Marketing & Growth Lead | Campaign and content workflows |
+| Social-media strategy and planning | Marketing & Growth Lead | Channel architecture, editorial plans and campaign workflows |
+| Social-media management and automation | Marketing + Software Leads | Approval queues, community policy, scheduling, monitoring and safe automation |
+| Advertising | Marketing & Growth Lead | Campaign, creative, budget and measurement controls |
 | SEO, AEO, GEO, and audits | Marketing & Growth Lead | Source-grounded audit skills |
 | Analytics and reporting | Operations Lead | Defined metrics and sourced reports |
 | Automation and AI | Product + Software Leads | Approved workflow and integration designs |
@@ -245,7 +247,7 @@ See the [Team Constitution](docs/01-governance/team-constitution.md), [Security 
 
 - Canonical governance and documentation.
 - Eight persistent roles and bounded subagent profiles.
-- Nineteen validated skill packages.
+- Twenty validated skill packages.
 - Eleven contracts and twelve human templates.
 - Import-ready OpenBot team manifest.
 - T3 Code operating guidance and rollout plan.
