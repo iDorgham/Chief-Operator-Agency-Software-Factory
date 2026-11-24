@@ -34,6 +34,7 @@ test("responsive screens have no overflow or automated WCAG A/AA violations", as
     await page.goto("/");
     await expect(page.getByRole("heading", { name: "Work in focus" })).toBeVisible();
     for (const view of ["Overview", "Projects", "Work queue", "Active run", "Approvals", "Team", "Capabilities", "Evidence", "Audit", "Improvements", "Settings"]) {
+      if (width <= 700) await page.getByRole("button", { name: "Open menu" }).click();
       await page.getByRole("navigation").getByRole("button", { name: view, exact: view !== "Approvals" }).click();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
       const result = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
@@ -42,9 +43,35 @@ test("responsive screens have no overflow or automated WCAG A/AA violations", as
   }
   await page.setViewportSize({ width: 1440, height: 1050 });
   await page.getByRole("button", { name: "Overview", exact: true }).click();
-  await page.screenshot({ path: "../../.cache/ui-001-desktop.png", fullPage: true });
+  await page.locator(".view-content").evaluate(async element => {
+    await Promise.all(element.getAnimations({ subtree: true }).map(animation => animation.finished));
+  });
+  await page.screenshot({ path: "../../.cache/ui-002-desktop.png", fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.screenshot({ path: "../../.cache/ui-001-mobile.png", fullPage: true });
+  await page.screenshot({ path: "../../.cache/ui-002-mobile.png", fullPage: true });
+});
+
+test("mobile menu, compact timeline and reduced motion remain usable", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: "Work in focus" })).toBeVisible();
+  await expect(page.getByRole("navigation")).toBeHidden();
+  await page.getByRole("button", { name: "Open menu" }).click();
+  await expect(page.getByRole("button", { name: "Close menu" })).toHaveAttribute("aria-expanded", "true");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  const menuScan = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
+  expect(menuScan.violations).toEqual([]);
+  await page.getByRole("navigation").getByRole("button", { name: "Work queue", exact: true }).click();
+  await expect(page.getByRole("navigation")).toBeHidden();
+  await expect(page.getByRole("heading", { name: "Work queue", exact: true })).toBeFocused();
+  await page.getByRole("button", { name: "Open menu" }).click();
+  await page.getByRole("navigation").getByRole("button", { name: "Overview", exact: true }).click();
+  await expect(page.locator(".panel").first()).toHaveCSS("animation-name", "none");
+  await page.getByRole("button", { name: "View timeline" }).click();
+  await expect(page.getByText("ETA unavailable", { exact: false })).toBeVisible();
+  await page.goBack();
+  await expect(page.getByRole("heading", { name: "Workspace overview" })).toBeVisible();
 });
 
 test("keyboard skip link, loading, service failure and retry are usable", async ({ page }) => {

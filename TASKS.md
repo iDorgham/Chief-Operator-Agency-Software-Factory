@@ -23,6 +23,7 @@ Statuses: `done`, `ready`, `blocked`, `deferred`.
 | CORE-002 | done | Software Lead | Implement Drizzle schema, migrations, and event store in Factory Core | `packages/core/`; Drizzle schema, Zod contracts, state machine with tests, and migration `0000_loving_blindfold.sql` generated and verified |
 | CORE-003 | done | Software Lead | Implement Factory Core tRPC routers and service handlers | `packages/core/src/trpc/`; type-safe routers for `projects`, `tasks`, and `approvals` with context actor, state guards, and 3/3 passing unit tests |
 | UI-001 | ready | Software Lead | Demo Control Desk implemented; awaiting independent acceptance | `packages/control-desk/`; `plans/dashboard/UI-001-control-desk.md`; `docs/06-control-desk/UI-001-validation.md`; Live disabled |
+| UI-002 | ready | Software Lead | Minimal modern Control Desk refresh requested by operator; independent acceptance pending | `plans/dashboard/UI-002-control-desk-refresh.md`; `docs/06-control-desk/UI-002-validation.md` |
 | GH-001 | deferred | Software/Quality | Connect test GitHub repository | Approved test repository and credentials |
 | MKT-001 | deferred | Marketing/Design | Connect creative/growth services | Provider, rights, privacy and spend approvals |
 
