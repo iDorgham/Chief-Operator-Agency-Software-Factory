@@ -4,6 +4,7 @@ dist/
 build/
 coverage/
 node_modules/
+.claude/settings.local.json
 
 # Local secrets and environment
 .env

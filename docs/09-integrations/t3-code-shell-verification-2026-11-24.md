@@ -82,3 +82,37 @@ Re-checked the local state without any model call or external service:
 | T3 shell env cache | `~/.t3/userdata/shell-environment-cache.json` (mtime 2026-11-24 00:52) still lists `...\WindowsApps\Microsoft.PowerShellPreview_8wekyb3d8bbwe` first and does not contain the portable path | restart still pending |
 
 Conclusion: the environmental remedy is intact, but blocker 1 is unresolved - T3 Code has not been restarted since the fix, so its Codex provider would still spawn the broken Store alias. The smoke re-run remains blocked on the human restart plus the Codex usage window; running the Codex thread also spends external quota and stays outside autonomous scope.
+
+## Restart and shell-cache verification - 2026-11-24T04:40Z
+
+T3 Code was restarted on operator instruction. All nine `T3 Code (Beta)` processes and the resource monitor were stopped, and the app was relaunched with a `PATH` composed from the registry (machine + user), so the new server inherits the portable PowerShell 7 directory ahead of the Store aliases. The server came back up (8 processes) and the `t3` CLI reached it (`t3 thread list` returned the Bots project threads).
+
+The server regenerated `~/.t3/userdata/shell-environment-cache.json` at 04:40:15Z (pre-restart copy saved as `shell-environment-cache.pre-restart-20261124T043938Z.json.bak`):
+
+| Check | Pre-restart | Post-restart |
+| --- | --- | --- |
+| Leading `PATH` entry | `...\WindowsApps\Microsoft.PowerShellPreview_8wekyb3d8bbwe` | `C:\Users\User\AppData\Local\Programs\PowerShell\7` (index 0) |
+| Preview Store alias in `PATH` | present, first | absent |
+| First `WindowsApps` entry index | 0 | 27 |
+
+**Blocker 1 is cleared:** the restarted T3 Code server resolves a bare `pwsh` to the real 7.7.0, so its Codex provider will no longer spawn the broken Store alias.
+
+**Blocker 2 still open:** the Codex usage window resets at 2026-11-24T06:06:24Z (the snoozed smoke-2 thread `mcp:48202f23-...` carries that `snoozedUntil`). At the time of this check (04:40Z) Codex is still rate-limited, so the end-to-end smoke thread - which must run a shell command through a Codex turn - cannot pass yet and is not attempted. It is primed to run after 06:06Z.
+
+## Smoke thread re-run - 2026-11-24T06:08Z (PASS)
+
+After the Codex usage window reset (06:06:24Z), a read-only Codex smoke thread was run against an isolated worktree. The shell fix is proven end-to-end.
+
+| Item | Value |
+| --- | --- |
+| Thread | `mcp:86a00d59-2f7e-4370-aa40-d21a6336d1ea` (T3-002 smoke re-run) |
+| Provider / model | codex `gpt-6.1-sol`, `approval-required` |
+| Worktree / branch | `D:\worktrees\bots\t3-36189def-22fdb62001381f8f`, branch `t3/t3-002-smoke-rerun-readonly` |
+| Prompt | read `AGENTS.md`, reply with only its first markdown heading; no writes, no network, no git writes |
+| Outcome | `completed`; assistant returned `# Factory Repository Instructions` |
+
+The returned line is the exact first heading of `AGENTS.md`, which the agent could obtain only by reading the file through a shell command that succeeded - the step that failed on every earlier thread with `CreateProcessAsUserW failed: 5 (Access is denied.)`. The thread stayed inside its exclusions: it ran in its own worktree, made no edit, commit, push or PR (pull request count 0), and performed no network action. This completes the T3-002 acceptance criteria: the repository is registered as a T3 Code project and a harmless Codex thread started, stayed read-only, and returned a correct result.
+
+The activity trace also displayed two non-blocking startup warnings for optional MCP clients: `pencil` was missing its configured path and `byterover-mcp` closed during initialization. Neither client supplied evidence or affected the read-only result. The isolated branch `t3/t3-002-smoke-rerun-readonly` was independently checked with `git status --short --branch` and had no modified or untracked files.
+
+Both earlier remedy blockers are now cleared: the portable PowerShell 7.7.0 + PATH remedy (verified), the T3 Code restart (verified via the regenerated shell cache), and the Codex quota window (passed). **T3-002 is complete.**

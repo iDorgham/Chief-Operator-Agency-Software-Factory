@@ -9,14 +9,14 @@ Canonical product site: [https://t3.codes/](https://t3.codes/).
 - T3 Code CLI is installed at `C:\Users\User\.t3\bin\t3.cmd`, version `0.1.9`.
 - Codex CLI `0.166.0`, Claude Code `2.1.330`, OpenCode and Qoder `1.1.89` are present. OpenCode could not write its user log inside the current sandbox, so runtime readiness is unverified.
 - This repository is registered as T3 Code project `Bots` (`5b308c28-81b9-4965-91ea-4cd735e87926`), workspace `D:\Work\AI\Projects\bots`, GitHub identity `iDorgham/Chief-Operator-Agency-Software-Factory`, added 2026-11-24 without remote access.
-- Codex threads cannot yet execute shell commands on this host: Codex's Windows restricted-token sandbox cannot launch the Microsoft Store `pwsh` alias. A portable PowerShell `7.7.0` is now installed at `%LOCALAPPDATA%\Programs\PowerShell\7` and first on the user `PATH`; evidence and rollback steps are in [../../docs/09-integrations/t3-code-shell-verification-2026-11-24.md](../../docs/09-integrations/t3-code-shell-verification-2026-11-24.md). A T3 Code restart is required so the provider inherits the new `PATH`.
+- The Codex restricted-token shell issue is resolved: portable PowerShell `7.7.0` is first on the user `PATH`, T3 Code was restarted, and read-only thread `mcp:86a00d59-2f7e-4370-aa40-d21a6336d1ea` successfully read `AGENTS.md` from isolated branch `t3/t3-002-smoke-rerun-readonly`. Evidence and rollback details are in [../../docs/09-integrations/t3-code-shell-verification-2026-11-24.md](../../docs/09-integrations/t3-code-shell-verification-2026-11-24.md).
 
 ## Rollout stages
 
 1. **Complete:** record OpenBot version, server, license, provider, storage and Marketplace status.
 2. **Complete:** import Chief Operator; run a read-only project-summary task and verify that no tools or connected applications are used.
 3. **Complete:** start T3 Code locally on loopback and add this repository as project `Bots`.
-4. **Blocked:** run one synthetic Codex implementation thread with no external GitHub write. Two read-only smoke threads stayed inside their exclusions, but neither could read a file because shell execution failed in Codex's Windows sandbox; the shell defect is fixed and the passing re-run waits on a T3 Code restart and the Codex usage window (08:06).
+4. **Complete:** run one synthetic Codex thread with no external GitHub write. The passing read-only re-run used an isolated worktree, returned the exact first heading of `AGENTS.md`, and left its branch clean.
 5. Run one independent review thread and compare its result to the approved criteria.
 6. Return evidence through OpenBot and verify the approval card stops before merge/deploy.
 7. Add remaining team leads and reusable OpenBot workflows one at a time.
