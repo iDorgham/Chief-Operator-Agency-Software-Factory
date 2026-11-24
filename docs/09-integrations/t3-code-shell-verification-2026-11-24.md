@@ -70,3 +70,15 @@ This changes the local machine configuration only. Nothing was written to this r
 1. Restart T3 Code so the Codex provider inherits the updated `PATH`.
 2. After the Codex usage window resets, re-run the T3-002 smoke thread read-only and attach the result to this document.
 3. Optional cleanup: remove the PowerShell Preview Store package once the portable stable shell is confirmed working in threads.
+
+## Re-verification - 2026-11-24 (read-only)
+
+Re-checked the local state without any model call or external service:
+
+| Check | Observation | Status |
+| --- | --- | --- |
+| Portable shell present | `C:\Users\User\AppData\Local\Programs\PowerShell\7\pwsh.exe` reports `7.7.0` | remedy holds |
+| User `PATH` prepend | `HKCU\Environment\Path` begins with `C:\Users\User\AppData\Local\Programs\PowerShell\7` ahead of the `WindowsApps` aliases | remedy holds |
+| T3 shell env cache | `~/.t3/userdata/shell-environment-cache.json` (mtime 2026-11-24 00:52) still lists `...\WindowsApps\Microsoft.PowerShellPreview_8wekyb3d8bbwe` first and does not contain the portable path | restart still pending |
+
+Conclusion: the environmental remedy is intact, but blocker 1 is unresolved - T3 Code has not been restarted since the fix, so its Codex provider would still spawn the broken Store alias. The smoke re-run remains blocked on the human restart plus the Codex usage window; running the Codex thread also spends external quota and stays outside autonomous scope.
