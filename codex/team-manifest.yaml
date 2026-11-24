@@ -1,0 +1,30 @@
+version: 1.0.0
+status: launch-ready
+surface: codex-chats
+front_door: chief-operator
+bootstrap: codex/ROLE_BOOTSTRAP.md
+roles:
+  - id: chief-operator
+    title: "Chief Operator"
+    source: agents/chief-operator/AGENT.md
+  - id: product-lead
+    title: "Product Lead"
+    source: agents/product-lead/AGENT.md
+  - id: delivery-manager
+    title: "Delivery Manager"
+    source: agents/delivery-manager/AGENT.md
+  - id: software-lead
+    title: "Software Lead"
+    source: agents/software-lead/AGENT.md
+  - id: quality-security-release-lead
+    title: "Quality, Security and Release Lead"
+    source: agents/quality-security-release-lead/AGENT.md
+  - id: design-content-lead
+    title: "Design and Content Lead"
+    source: agents/design-content-lead/AGENT.md
+  - id: marketing-growth-lead
+    title: "Marketing and Growth Lead"
+    source: agents/marketing-growth-lead/AGENT.md
+  - id: operations-analytics-improvement-lead
+    title: "Operations, Analytics and Improvement Lead"
+    source: agents/operations-analytics-improvement-lead/AGENT.md

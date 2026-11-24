@@ -89,6 +89,8 @@ python scripts/factory.py --root fixtures/work retro    # metrics + drafted impr
 **Use it with your AI agent:**
 
 - **Claude Code, Codex or OpenCode:** open the repository. These agents read [`AGENTS.md`](AGENTS.md) automatically. Then paste the [Chief Operator prompt](prompts/CHIEF_OPERATOR.md) and give it a brief.
+- **Single Dot + T3 Code:** configure one Dot as the [Chief Operator](dot/CHIEF_OPERATOR.md), then route approved software handoffs to T3 Code using the [operating plan](docs/09-integrations/dot-and-t3-code.md).
+- **Codex role chats:** use the [Codex team manifest](codex/team-manifest.yaml) and [role bootstrap](codex/ROLE_BOOTSTRAP.md) for separate project chats. These are not Dot agents.
 - **Any chat-based model:** paste the [Chief Operator prompt](prompts/CHIEF_OPERATOR.md), then fill in the [project brief template](templates/project-brief.md).
 - **OpenBot.run:** import the [team manifest](openbot/team-manifest.yaml) after working through the [verification checklist](openbot/verification-checklist.md).
 
@@ -172,13 +174,17 @@ Flow: Chief Operator → approved spec and handoff → T3 Code coding thread →
 
 </details>
 
+## Control Desk local preview
+
+UI-001 implements a synthetic Control Desk with project work, run phases, evidence, approval simulations and session audit. Start it with the [Control Desk instructions](packages/control-desk/README.md). Live mode remains disabled; no database or external execution adapters are connected. See the [UI-001 evidence](docs/06-control-desk/UI-001-validation.md).
+
 ## What works today
 
 | Available now | Planned (not live yet) |
 | --- | --- |
 | Governance, roles, authority matrix and quality gates | OpenBot team imported and licence verified |
 | 8 agent definitions, subagent profiles, 20 validated skills | Factory Core service and database |
-| 11 JSON Schema contracts and 13 templates | Control Desk web app |
+| 11 JSON Schema contracts, 13 templates and local Demo Control Desk | Live Control Desk with durable storage and authenticated approvals |
 | `factory.py` CLI: tasks, state machine, events, retro | Live GitHub, design, media and publishing adapters |
 | Synthetic fixtures and CI validation on every push | Production deployment or public automation |
 
@@ -208,6 +214,8 @@ scripts/         factory.py CLI, validators, tests
 fixtures/        Synthetic projects, contract examples, acceptance cases
 work/            Your real project and client work (created by factory.py)
 openbot/         Import-ready OpenBot team package
+codex/           Launch-ready Codex role-chat package
+dot/             Single-Dot Chief Operator configuration
 memory/          Scoped, curated memory
 archive/         Immutable pre-rebuild snapshot
 ```

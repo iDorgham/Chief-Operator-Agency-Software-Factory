@@ -9,7 +9,7 @@ Move from a portable file-based factory to a verified OpenBot organization, then
 | Milestone | Entry | Exit |
 | --- | --- | --- |
 | M1 Foundation | Approved reset plan | Governance, assets, skills and synthetic validation pass |
-| M2 OpenBot team | License/account/version verified | Chief Operator and leads complete private handoff test |
+| M2 OpenBot team | Account/version verified; synthetic use only while `LIC-001` is open | Chief Operator and leads complete private handoff test; commercial use remains separately gated on a current license |
 | M3 Factory Core | ADR-001 approved | Durable state, transitions, approvals, audit and recovery tested |
 | M4 Control Desk | Factory Core API stable | Responsive Demo dashboard and approval flows pass |
 | M5 GitHub | Approved test repository | Idempotent spec-to-review flow passes without production merge |

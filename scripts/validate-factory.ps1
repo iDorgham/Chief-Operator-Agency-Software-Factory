@@ -11,14 +11,29 @@ Get-ChildItem (Join-Path $root "schemas") -Filter "*.json" | ForEach-Object {
   catch { $failures.Add("Invalid JSON: $($_.FullName)") }
 }
 
-Get-ChildItem $root -Recurse -File -Filter "*.md" |
-  Where-Object { $_.FullName -notlike "*\archive\*" } |
+# Check repository documentation, not installed dependency or generated docs.
+# rg respects .gitignore and includes new, untracked source documents.
+# Keep the documented Python/PowerShell-only setup working without ripgrep.
+function Get-MarkdownSources([string]$directory) {
+  foreach ($entry in Get-ChildItem -LiteralPath $directory -Force) {
+    if ($entry.PSIsContainer) {
+      if ($entry.Name -notin @('archive', '.git', 'node_modules', '.next', '.cache', 'dist', 'build', 'coverage', 'test-results', 'playwright-report')) {
+        Get-MarkdownSources $entry.FullName
+      }
+    } elseif ($entry.Extension -eq '.md') { $entry.FullName }
+  }
+}
+$markdownSources = if (Get-Command rg -ErrorAction SilentlyContinue) {
+  & rg --files --hidden -g '*.md' -g '!archive/**' -g '!.git/**' $root
+} else { Get-MarkdownSources $root }
+$markdownSources |
+  ForEach-Object { Get-Item -LiteralPath $_ } |
   ForEach-Object {
     $file = $_
     $content = Get-Content -Raw -LiteralPath $file.FullName
     foreach ($match in [regex]::Matches($content, '\[[^\]]+\]\(([^)]+)\)')) {
       $target = $match.Groups[1].Value
-      if ($target -match '^(https?://|mailto:|#)') { continue }
+      if ($target -match '^([a-zA-Z][a-zA-Z0-9+.-]*:|#)') { continue }
       $path = ($target -split '#')[0]
       if ($path -and -not (Test-Path -LiteralPath (Join-Path $file.DirectoryName $path))) {
         $failures.Add("Broken link: $($file.FullName) -> $target")

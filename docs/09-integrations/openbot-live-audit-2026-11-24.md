@@ -39,7 +39,7 @@ The account billing screen showed **Personal use — Current** and described it 
 
 OpenBot's official terms state that commercial use requires a valid Commercial License. The official pricing page lists commercial Starter and Team licenses and labels the license promotion free until December 1, 2026. The promotional price does not itself prove that this account has activated a valid commercial license.
 
-**Decision:** synthetic evaluation and personal/noncommercial configuration may continue. Client work, company work and other commercial use remain blocked until the operator explicitly activates the appropriate commercial license and the Billing screen shows it as current.
+**Decision:** synthetic evaluation and personal/noncommercial configuration may continue. Client work, company work and other commercial use remain blocked until the operator explicitly activates the appropriate commercial license and the Billing screen shows it as current. For the current one-human-user factory, the recommended target is the one-seat Starter License; AI agents do not count as Seats. A hosted server subscription is separate and is not needed for the current local setup.
 
 ## Data-policy decision
 
@@ -56,7 +56,7 @@ The current local storage observation is consistent with that policy. It does no
 
 ## Remaining human actions
 
-1. Before any commercial or client use, activate the appropriate Starter or Team commercial license and verify that Billing reports it as current.
+1. Complete `LIC-001`: preview the final Starter License checkout price, renewal period, tax and effective date; obtain exact operator approval for that purchase; activate it; then verify that Billing reports it as current. If another human user will sign in, reassess the Team License instead.
 2. Decide whether the staged `0.77.0` update should be installed; do not update during active agent work without a rollback window.
 3. Review or disconnect the globally connected GitHub application before any client repository is introduced.
 4. Resolve or disconnect the Slack connection marked **Needs attention**.

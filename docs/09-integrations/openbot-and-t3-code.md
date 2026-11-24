@@ -84,4 +84,6 @@ OpenBot owns who/why/what/approval. T3 Code owns the coding session/workspace. G
 - No provider credentials in OpenBot agent prompts or repository files.
 - No remote T3 Code exposure until authentication/network trust is verified.
 - Reconcile Git state before retrying an interrupted action.
+- Treat full T3 MCP access as temporary bootstrap access. Validate OpenBot separately, then reduce to read/list, bounded thread creation, status and evidence permissions where supported.
+- OpenBot may orchestrate Codex implementation and Claude review, but it must not start both as competing implementers on the same scope.
 

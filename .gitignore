@@ -4,6 +4,10 @@ dist/
 build/
 coverage/
 node_modules/
+.next/
+*.tsbuildinfo
+test-results/
+playwright-report/
 .claude/settings.local.json
 
 # Local secrets and environment

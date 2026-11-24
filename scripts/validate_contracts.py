@@ -5,7 +5,7 @@ Checks:
   2. Every fixtures/contracts/valid/<schema>.*.json validates against its schema,
      and every fixtures/contracts/invalid/<schema>.*.json is rejected by it.
   3. Every schema has at least one valid fixture.
-  4. openbot/team-manifest.yaml role sources exist and channel members are declared roles.
+  4. OpenBot and Codex team manifests reference the same canonical roles.
   5. Skills named in agents/*/AGENT.md "## Skills" sections exist as packages.
   6. Archive SHA256SUMS entries match file content at the baseline commit.
   7. Every skills/*/SKILL.md and .agents/skills/*/SKILL.md has valid frontmatter
@@ -79,23 +79,32 @@ def check_schemas_and_fixtures(jsonschema) -> None:
         fail(f"Schema '{name}' has no valid fixture in fixtures/contracts/valid/")
 
 
-def check_manifest(yaml) -> None:
-    path = ROOT / "openbot" / "team-manifest.yaml"
+def check_manifest_file(path: Path, yaml) -> set[str]:
     manifest = yaml.safe_load(path.read_text(encoding="utf-8"))
     role_ids = set()
     for role in manifest.get("roles", []):
         role_ids.add(role["id"])
         if not (ROOT / role["source"]).is_file():
-            fail(f"Manifest role '{role['id']}' source missing: {role['source']}")
+            fail(f"{rel(path)} role '{role['id']}' source missing: {role['source']}")
     if manifest.get("front_door") not in role_ids:
-        fail("Manifest front_door is not a declared role")
+        fail(f"{rel(path)} front_door is not a declared role")
     for channel in manifest.get("channels", []):
         for member in channel.get("members", []):
             if member not in role_ids:
-                fail(f"Manifest channel '{channel['id']}' member '{member}' is not a declared role")
+                fail(f"{rel(path)} channel '{channel['id']}' member '{member}' is not a declared role")
+    bootstrap = manifest.get("bootstrap")
+    if bootstrap and not (ROOT / bootstrap).is_file():
+        fail(f"{rel(path)} bootstrap missing: {bootstrap}")
+    return role_ids
+
+
+def check_manifests(yaml) -> None:
+    manifests = [ROOT / "openbot" / "team-manifest.yaml", ROOT / "codex" / "team-manifest.yaml"]
     agent_dirs = {p.parent.name for p in (ROOT / "agents").glob("*/AGENT.md")}
-    if agent_dirs != role_ids:
-        fail(f"Manifest roles {sorted(role_ids)} differ from agents/ {sorted(agent_dirs)}")
+    for path in manifests:
+        role_ids = check_manifest_file(path, yaml)
+        if agent_dirs != role_ids:
+            fail(f"{rel(path)} roles {sorted(role_ids)} differ from agents/ {sorted(agent_dirs)}")
 
 
 def check_agent_skill_refs() -> None:
@@ -222,7 +231,7 @@ def main() -> int:
         return 1
 
     check_schemas_and_fixtures(jsonschema)
-    check_manifest(yaml)
+    check_manifests(yaml)
     check_agent_skill_refs()
     check_skills(yaml)
     check_archive_hashes()

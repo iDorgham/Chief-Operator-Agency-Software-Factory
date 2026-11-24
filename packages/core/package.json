@@ -1,0 +1,22 @@
+{
+  "name": "@factory/core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Factory Core domain model, Drizzle schema, state machine and event store",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "test": "node --test --loader ts-node/esm tests/**/*.test.ts"
+  },
+  "dependencies": {
+    "@trpc/server": "^11.31.0",
+    "drizzle-orm": "^0.38.4",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "drizzle-kit": "^0.30.4",
+    "typescript": "^5.7.3"
+  }
+}
